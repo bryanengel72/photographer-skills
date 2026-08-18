@@ -242,29 +242,7 @@
       <p>You upload one file to Claude and you're done — nothing to unzip, no folders to hunt for, nothing installed on your computer. Then you spend two minutes telling it how you actually shoot.</p>
     </div>
 
-    <div class="download">
-      <div>
-        <h3>Shoot Day Commander</h3>
-        <p>Runs the shoot day — schedule, emails, run sheet, selection chase. Version 1.0.0, one file, 34&nbsp;KB.</p>
-      </div>
-      <a class="btn btn-solid btn-lg" href="https://github.com/bryanengel72/shoot-day-commander/releases/latest/download/shoot-day-commander.zip">Download the skill</a>
-    </div>
-
-    <div class="download">
-      <div>
-        <h3>Gallery Delivery Kit</h3>
-        <p>Runs everything after — reconcile, rename, deliver, chase downloads. Version 1.0.0, one file, 40&nbsp;KB.</p>
-      </div>
-      <a class="btn btn-solid btn-lg" href="https://github.com/bryanengel72/gallery-delivery-kit/releases/latest/download/gallery-delivery-kit.zip">Download the skill</a>
-    </div>
-
-    <div class="download">
-      <div>
-        <h3>Client Quote Builder</h3>
-        <p>Turns the inquiry into a booked, paid job — quote, contract, invoice chase. Version 1.0.0, one file, 67&nbsp;KB.</p>
-      </div>
-      <a class="btn btn-solid btn-lg" href="https://github.com/bryanengel72/client-quote-builder/releases/latest/download/client-quote-builder.zip">Download the skill</a>
-    </div>
+    <div id="dl-list"></div>
     <p class="dl-note">Free and open source. Nothing to sign up for, no email required.</p>
 
     <div class="step">
@@ -345,12 +323,15 @@
     const SKILLS = [
       { slug: "shoot-day-commander",   category: "Workflow",  status: "live",
         blurb: "Runs a corporate headshot day end to end \u2014 builds the schedule from the roster, drafts every email, prints the day-of run sheet, then chases image selections from all forty people afterward.",
+        dl: "Runs the shoot day — schedule, emails, run sheet, selection chase. Version 1.0.0, one file, 34 KB.",
         lang: "Python" },
       { slug: "gallery-delivery-kit",  category: "Delivery",  status: "live",
         blurb: "Picks up where the shoot day ends. Drafts the delivery email, names and checks every export, writes the usage terms HR always asks for, then nudges the stragglers before the gallery expires.",
+        dl: "Runs everything after — reconcile, rename, deliver, chase downloads. Version 1.0.0, one file, 40 KB.",
         lang: "Python" },
       { slug: "client-quote-builder",  category: "Business",  status: "live",
         blurb: "Answers the inquiry, builds the quote, fills your contract, and chases the invoice \u2014 so the booking closes while you are still on location.",
+        dl: "Turns the inquiry into a booked, paid job — quote, contract, invoice chase. Version 1.0.0, one file, 67 KB.",
         lang: "Python" },
       { slug: "photo-blog-seo-engine", category: "Marketing", status: "soon",
         blurb: "Turns a finished gallery into a post that ranks \u2014 location keywords, alt text, and three social captions you will actually publish." },
@@ -373,6 +354,22 @@
       intro.textContent = liveCount + (liveCount === 1 ? " skill" : " skills") + " ready now"
         + (soonCount ? ", " + soonCount + " more on the way" : "")
         + ". Filter by the part of the job you want to hand off.";
+
+      // Download buttons come from the same SKILLS list as the cards, so a new
+      // live skill lights up its card and its download row from one edit.
+      const dlList = document.getElementById("dl-list");
+      if (dlList) {
+        const dlName = s => s.name || s.slug.split("-")
+          .map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
+        dlList.innerHTML = SKILLS.filter(s => s.status === "live").map(s => {
+          const zip = "https://github.com/" + OWNER + "/" + s.slug
+            + "/releases/latest/download/" + s.slug + ".zip";
+          return '<div class="download"><div>'
+            + '<h3>' + esc(dlName(s)) + '</h3>'
+            + '<p>' + esc(s.dl || s.blurb) + '</p></div>'
+            + '<a class="btn btn-solid btn-lg" href="' + zip + '">Download the skill</a></div>';
+        }).join("");
+      }
 
       function matches(s) {
         if (activeCat !== "All" && s.category !== activeCat) return false;
