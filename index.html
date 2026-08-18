@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Photographer Skills</title>
+<meta name="description" content="Agent skills for working photographers. Download one file, upload it to Claude, get back to shooting. No terminal required.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1f1f1f;
+    --ink-strong:#1a1a1a;
+    --bg:#ffffff;
+    --surface:#f4f4f4;
+    --muted:#5e5e5e;
+    --faint:#8a8a8a;
+    --label:#5e5e5e;
+    --line:#cecece;
+    --line-soft:#e2e2e2;
+    --max:1120px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:16px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:var(--max);margin:0 auto;padding-left:32px;padding-right:32px}
+  a{color:inherit;text-decoration:none}
+
+  h1,h2,h3,.display{
+    font-family:'Inter Tight','Inter',sans-serif;
+    font-weight:800;letter-spacing:-.035em;line-height:1.04;color:var(--ink-strong);
+  }
+  .label{font-size:12px;text-transform:uppercase;letter-spacing:.16em;color:var(--label);font-weight:500}
+  .rule{height:1px;background:var(--line);border:0}
+  code,.mono{font-family:'JetBrains Mono',monospace;font-size:.92em}
+
+  /* ---------- header ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--bg);position:sticky;top:0;z-index:50}
+  .nav{display:flex;align-items:center;justify-content:space-between;gap:20px;height:74px}
+  .wordmark{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:19px;letter-spacing:-.03em}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-links a:not(.btn){font-size:15px;color:var(--ink)}
+  .nav-links a:not(.btn):hover{color:var(--faint)}
+
+  /* ---------- buttons ---------- */
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    font-family:'Inter Tight','Inter',sans-serif;font-weight:700;font-size:15px;letter-spacing:-.01em;
+    padding:13px 22px;border-radius:0;border:1px solid transparent;
+    transition:background .15s ease,color .15s ease,border-color .15s ease;white-space:nowrap;
+  }
+  .btn-solid{background:var(--ink);color:#fff}
+  .btn-solid:hover{background:#000}
+  .btn-plain{color:var(--ink-strong);padding-left:4px;padding-right:4px}
+  .btn-plain:hover{color:var(--faint)}
+  .btn-outline{border-color:var(--ink);color:var(--ink)}
+  .btn-outline:hover{background:var(--ink);color:#fff}
+  .btn-outline-light{border-color:#fff;color:#fff}
+  .btn-outline-light:hover{background:#fff;color:var(--ink)}
+  .btn-lg{font-size:17px;padding:18px 30px}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:104px;padding-bottom:80px}
+  h1{font-size:clamp(2.7rem,6.6vw,4.9rem);margin-bottom:26px}
+  .lede{font-size:clamp(1.02rem,1.5vw,1.2rem);color:var(--muted);max-width:660px;margin-bottom:34px;line-height:1.6}
+  .cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+
+  /* ---------- stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;padding-top:38px;padding-bottom:38px}
+  .stat b{display:block;font-family:'Inter Tight',sans-serif;font-weight:800;font-size:clamp(2rem,3.6vw,2.7rem);letter-spacing:-.04em;color:var(--ink-strong);line-height:1;margin-bottom:12px}
+  .stat span{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.14em;color:var(--label);line-height:1.45}
+
+  /* ---------- sections ---------- */
+  .sec{padding-top:92px;padding-bottom:92px}
+  [id]{scroll-margin-top:90px}
+  .sec-head{margin-bottom:40px}
+  .sec-head .label{display:block;margin-bottom:16px}
+  .sec-head h2{font-size:clamp(1.9rem,4vw,2.9rem);margin-bottom:14px}
+  .sec-head p{color:var(--muted);max-width:600px;font-size:16.5px}
+
+  /* ---------- cards ---------- */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line)}
+  .card{background:var(--bg);padding:34px 32px 30px;display:flex;flex-direction:column;transition:background .15s ease}
+  a.card:hover{background:var(--surface)}
+  .card-top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+  .card-num{font-family:'Inter Tight',sans-serif;font-weight:800;font-size:13px;color:var(--ink-strong)}
+  .card h3{font-family:'JetBrains Mono',monospace;font-weight:500;font-size:16px;letter-spacing:-.01em;margin-bottom:12px;word-break:break-word;line-height:1.35}
+  .card h3 .owner{color:var(--faint)}
+  .card p{color:var(--muted);font-size:15.5px;flex:1}
+  .card-meta{display:flex;align-items:center;gap:20px;margin-top:26px;padding-top:16px;border-top:1px solid var(--line-soft);font-size:12px;text-transform:uppercase;letter-spacing:.11em;color:var(--faint)}
+  .card-meta .go{margin-left:auto;font-family:'Inter Tight',sans-serif;font-weight:700;color:var(--ink-strong);text-transform:none;font-size:14px}
+  a.card:hover .go{text-decoration:underline;text-underline-offset:3px}
+  .card.soon{background:var(--surface)}
+  .card.soon h3,.card.soon .card-num{color:var(--faint)}
+  .card.soon p{color:var(--faint)}
+  .pill{border:1px solid var(--ink);padding:3px 9px;font-size:10.5px;text-transform:uppercase;letter-spacing:.12em;font-weight:600;color:var(--ink)}
+  .pill.dim{border-color:var(--line);color:var(--faint);font-weight:500}
+
+  /* ---------- easy install ---------- */
+  .download{
+    border:1px solid var(--line);background:var(--surface);
+    padding:40px 36px;display:flex;align-items:center;justify-content:space-between;
+    gap:28px;flex-wrap:wrap;margin-bottom:14px;
+  }
+  .download h3{font-size:clamp(1.25rem,2.2vw,1.6rem);margin-bottom:8px}
+  .download p{color:var(--muted);font-size:15.5px;max-width:420px}
+  .dl-note{font-size:13.5px;color:var(--faint);margin-bottom:56px}
+
+  .step{padding-top:36px;padding-bottom:36px;border-top:1px solid var(--line)}
+  .step:first-of-type{border-top:0;padding-top:0}
+  .step b{display:block;font-family:'Inter Tight',sans-serif;font-weight:800;font-size:13px;margin-bottom:10px}
+  .step h3{font-size:clamp(1.25rem,2.3vw,1.65rem);margin-bottom:10px}
+  .step p{color:var(--muted);max-width:700px;font-size:16.5px}
+  .step p + p{margin-top:12px}
+  .step .chip{
+    display:inline-block;background:var(--surface);border:1px solid var(--line-soft);
+    padding:2px 8px;font-family:'JetBrains Mono',monospace;font-size:13.5px;color:var(--ink);
+  }
+
+  .paths{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);margin-top:24px}
+  .path{background:var(--bg);padding:22px 24px}
+  .path span{display:block;font-size:11.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--label);margin-bottom:10px}
+  .path code{font-size:14px;color:var(--ink-strong);word-break:break-all}
+
+  .callout{border-left:3px solid var(--ink);padding:4px 0 4px 20px;margin-top:34px}
+  .callout p{color:var(--muted);font-size:15.5px;max-width:640px}
+  .callout strong{color:var(--ink-strong)}
+
+  /* ---------- terminal / dev ---------- */
+  .code{border:1px solid var(--line);background:var(--surface);margin-top:28px}
+  .code-bar{padding:11px 18px;border-bottom:1px solid var(--line);font-size:11.5px;text-transform:uppercase;letter-spacing:.14em;color:var(--faint)}
+  .code pre{padding:22px 20px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:13.5px;line-height:1.9;color:var(--ink)}
+  .code .c{color:var(--faint)}
+  .code .p{font-weight:500}
+
+  /* ---------- dark band ---------- */
+  .band{background:var(--ink);color:#fff;padding-top:96px;padding-bottom:96px}
+  .band h2{color:#fff;font-size:clamp(2rem,4.6vw,3.2rem);margin-bottom:18px}
+  .band p{color:#c9c9c9;max-width:520px;margin-bottom:34px;font-size:16.5px}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding-top:32px;padding-bottom:32px}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:14px;color:var(--faint)}
+  .foot-links{display:flex;gap:26px}
+  .foot-links a:hover{color:var(--ink)}
+
+  @media(max-width:860px){.stats{grid-template-columns:repeat(2,1fr);gap:26px}}
+  @media(max-width:720px){
+    .nav-links a:not(.btn){display:none}
+    .grid,.paths{grid-template-columns:1fr}
+    .download{flex-direction:column;align-items:flex-start;gap:22px}
+  }
+  @media(max-width:640px){
+    .wrap{padding-left:20px;padding-right:20px}
+    .hero{padding-top:64px;padding-bottom:56px}
+    .sec{padding-top:64px;padding-bottom:64px}
+    .band{padding-top:68px;padding-bottom:68px}
+    .card{padding:28px 22px 26px}
+    .download{padding:30px 22px}
+    .btn-lg{width:100%}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="wordmark">Photographer&nbsp;Skills</a>
+    <nav class="nav-links">
+      <a href="#library">Library</a>
+      <a href="#install">Install</a>
+      <a href="#install" class="btn btn-solid">Get started</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="hero wrap">
+    <h1>The shoot ends at 4.<br>The work shouldn't.</h1>
+    <p class="lede">Skills that hand the admin side of photography to Claude — scheduling a headshot day, chasing selections, writing the blog post, sending the quote. Download one file, upload it to Claude, and you're done. No code, no terminal, no monthly fee.</p>
+    <div class="cta-row">
+      <a href="#install" class="btn btn-solid">Install your first skill</a>
+      <a href="#library" class="btn btn-plain">See what's available →</a>
+    </div>
+  </section>
+
+  <div class="wrap"><hr class="rule"></div>
+  <section class="wrap stats">
+    <div class="stat"><b>2</b><span>Clicks to install</span></div>
+    <div class="stat"><b>0</b><span>Code required</span></div>
+    <div class="stat"><b>Free</b><span>MIT licensed, forever</span></div>
+    <div class="stat"><b>60s</b><span>Download to first run</span></div>
+  </section>
+  <div class="wrap"><hr class="rule"></div>
+
+  <section class="sec wrap" id="library">
+    <div class="sec-head">
+      <span class="label">The Library</span>
+      <h2>One skill, ready today.</h2>
+      <p>Each skill is a self-contained folder. Start with Shoot Day Commander — the other three are in progress.</p>
+    </div>
+
+    <div class="grid">
+
+      <a class="card" href="https://github.com/bryanengel72/shoot-day-commander" target="_blank" rel="noopener">
+        <div class="card-top"><span class="card-num">01</span><span class="pill">Available now</span></div>
+        <h3><span class="owner">bryanengel72/</span>shoot-day-commander</h3>
+        <p>Runs a corporate headshot day end to end — builds the schedule from the roster, drafts every email, prints the day-of run sheet, then chases image selections from all forty people afterward.</p>
+        <div class="card-meta"><span>Python</span><span>MIT</span><span class="go">View on GitHub →</span></div>
+      </a>
+
+      <div class="card soon">
+        <div class="card-top"><span class="card-num">02</span><span class="pill dim">Coming soon</span></div>
+        <h3><span class="owner">skills/</span>lightroom-cull-assistant</h3>
+        <p>Triage two thousand frames without losing your mind. Flags the keepers, kills the duplicates, and writes star ratings straight back into your catalog.</p>
+        <div class="card-meta"><span>Editing</span><span class="go" style="color:var(--faint)">In progress</span></div>
+      </div>
+
+      <div class="card soon">
+        <div class="card-top"><span class="card-num">03</span><span class="pill dim">Coming soon</span></div>
+        <h3><span class="owner">skills/</span>photo-blog-seo-engine</h3>
+        <p>Turns a finished gallery into a post that ranks — location keywords, alt text, and three social captions you will actually publish.</p>
+        <div class="card-meta"><span>Marketing</span><span class="go" style="color:var(--faint)">In progress</span></div>
+      </div>
+
+      <div class="card soon">
+        <div class="card-top"><span class="card-num">04</span><span class="pill dim">Coming soon</span></div>
+        <h3><span class="owner">skills/</span>client-quote-builder</h3>
+        <p>Answers the inquiry, builds the quote, sends the contract, and chases the invoice — so the booking closes while you are still on location.</p>
+        <div class="card-meta"><span>Business</span><span class="go" style="color:var(--faint)">In progress</span></div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="wrap"><hr class="rule"></div>
+
+  <section class="sec wrap" id="install">
+    <div class="sec-head">
+      <span class="label">Install — the easy way</span>
+      <h2>Two clicks. No terminal.</h2>
+      <p>You upload one file to Claude and you're done. Nothing to unzip, no folders to hunt for, nothing installed on your computer.</p>
+    </div>
+
+    <div class="download">
+      <div>
+        <h3>Shoot Day Commander</h3>
+        <p>Version 1.0.0, the whole skill in one file. 34&nbsp;KB, free forever.</p>
+      </div>
+      <a class="btn btn-solid btn-lg" href="https://github.com/bryanengel72/shoot-day-commander/releases/latest/download/shoot-day-commander.zip">Download the skill</a>
+    </div>
+    <p class="dl-note">Free and open source. Nothing to sign up for, no email required.</p>
+
+    <div class="step">
+      <b>01</b>
+      <h3>Download the file</h3>
+      <p>Click the black button above. Your browser saves <span class="chip">shoot-day-commander.zip</span> to your Downloads folder.</p>
+      <p><strong>Leave it zipped.</strong> Don't double-click it or unzip it — Claude wants the file exactly as it downloaded.</p>
+    </div>
+
+    <div class="step">
+      <b>02</b>
+      <h3>Upload it to Claude</h3>
+      <p>In Claude, open <strong>Customize → Skills</strong>, click <strong>Add</strong>, then choose <strong>Upload a skill</strong> and pick the file you just downloaded.</p>
+      <p>It appears in your skills list with a switch next to it. Make sure the switch is on.</p>
+    </div>
+
+    <div class="step">
+      <b>03</b>
+      <h3>Just ask</h3>
+      <p>Talk to Claude the way you'd talk to an assistant — no commands to memorize:</p>
+      <p><em>"Plan a headshot day for 30 people at Meridian Law on September 14th, starting at 9am."</em></p>
+      <p>Paste in the coordinator's messy roster email and it will sort out the schedule, the emails, and the run sheet from there.</p>
+
+      <div class="callout">
+        <p><strong>One setting to check first.</strong> Skills need code execution turned on. Open <strong>Settings → Capabilities</strong> and switch on <strong>Code execution and file creation</strong>. Works on Free, Pro, Max, Team and Enterprise plans.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap"><hr class="rule"></div>
+
+  <section class="sec wrap" id="developers">
+    <div class="sec-head">
+      <span class="label">For developers</span>
+      <h2>Prefer the terminal?</h2>
+      <p>If you're running Claude Code, skip the upload entirely and clone straight into your skills directory. Python 3.8 and the standard library — no dependencies, no build step.</p>
+    </div>
+
+    <div class="code">
+      <div class="code-bar">Terminal</div>
+      <pre><span class="c"># clone into your Claude Code skills directory</span>
+<span class="p">git clone</span> https://github.com/bryanengel72/shoot-day-commander.git \
+  ~/.claude/skills/shoot-day-commander
+
+<span class="c"># kick the tires on the sample roster</span>
+<span class="p">cd</span> ~/.claude/skills/shoot-day-commander/examples
+<span class="p">python3</span> ../scripts/build_schedule.py --roster roster-sample.csv \
+  --start 09:00 --verify-count 9 --by-department \
+  --title "Meridian Law" --date 2026-09-14</pre>
+    </div>
+
+    <div class="callout">
+      <p>State lives in a CSV and two Markdown files you own outright. No database, no connectors, nothing phoning home. Fork it and bend it to your studio.</p>
+    </div>
+  </section>
+
+  <section class="band">
+    <div class="wrap">
+      <h2>Built in the open.</h2>
+      <p>Everything lives on GitHub under MIT. Fork it, break it, send a pull request — or just take it and never look back.</p>
+      <a href="https://github.com/bryanengel72/shoot-day-commander" target="_blank" rel="noopener" class="btn btn-outline-light">View the repository</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Photographer Skills — MIT Licensed</span>
+    <div class="foot-links">
+      <a href="#library">Library</a>
+      <a href="#install">Install</a>
+      <a href="#developers">Developers</a>
+      <a href="https://github.com/bryanengel72/shoot-day-commander" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
