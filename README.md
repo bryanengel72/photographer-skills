@@ -3,7 +3,7 @@
 Landing page for a small library of Claude Skills built for working
 photographers. Static single page, no build step.
 
-**Live:** https://bryanengel72.github.io/photographer-skills-site/
+**Live:** https://photographer-skills.vercel.app
 
 ## Skills
 
